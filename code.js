@@ -1,6 +1,26 @@
 $(document).ready(function () {
     $("form").submit(createStudent);
 
+    var gradeBook = [];
+
+    $("#sortByName").click(function(){
+        gradeBook.sort(sortByName);
+        var output = ""
+        for (var x of gradeBook) {
+            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage} Grade: ${x.letterGrade} <br>`);
+        }
+        $("#gradeBookOutput").html(output);
+    });
+
+    $("#sortByPercent").click(function(){
+        gradeBook.sort(sortByPercent);
+        var output = ""
+        for (var x of gradeBook) {
+            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage} Grade: ${x.letterGrade} <br>`);
+        }
+        $("#gradeBookOutput").html(output);
+    });
+
     function createStudent (event) {
         event.preventDefault();
 
@@ -8,7 +28,6 @@ $(document).ready(function () {
         var lastName = $("#lastName").val();
         var pointsEarned = $("#pointsEarned").val();
         var pointsPossible = $("#pointsPossible").val();
-
 
         var percent = ((pointsEarned / pointsPossible) * 100).toFixed(2);
         var grade;
@@ -36,9 +55,40 @@ $(document).ready(function () {
         student.percentage = percent;
         student.letterGrade = grade;
 
-        $("#firstNameOutput").text(student.firstN);
-        $("#lastNameOutput").text(student.lastN);
-        $("#percentOutput").text(`${student.percentage}%`);
-        $("#gradeOutput").text(student.letterGrade);
+        //add student(object) to gradebook
+        gradeBook.push(student);
+        var output = ""
+        for (var x of gradeBook) {
+            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage} Grade: ${x.letterGrade} <br>`);
+        }
+        $("#gradeBookOutput").html(output);
+        //console.log(gradeBook);
     }
+
+    function sortByName(a,b) {
+        if (a.lastN < b.lastN) {
+            return -1;
+        }
+        else if (a.lastN > b.lastN) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+        //console.log(gradeBook);
+    }
+
+    function sortByPercent(a,b) {
+        if (a.percentage < b.percentage) {
+            return -1;
+        }
+        else if (a.percentage > b.percentage) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+        //console.log(gradeBook);
+    }
+
 });
