@@ -7,7 +7,7 @@ $(document).ready(function () {
         gradeBook.sort(sortByName);
         var output = ""
         for (var x of gradeBook) {
-            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage} Grade: ${x.letterGrade} <br>`);
+            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage}% Grade: ${x.letterGrade} <br>`);
         }
         $("#gradeBookOutput").html(output);
     });
@@ -16,7 +16,7 @@ $(document).ready(function () {
         gradeBook.sort(sortByPercent);
         var output = ""
         for (var x of gradeBook) {
-            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage} Grade: ${x.letterGrade} <br>`);
+            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage.toFixed(2)}% Grade: ${x.letterGrade} <br>`);
         }
         $("#gradeBookOutput").html(output);
     });
@@ -29,7 +29,7 @@ $(document).ready(function () {
         var pointsEarned = $("#pointsEarned").val();
         var pointsPossible = $("#pointsPossible").val();
 
-        var percent = ((pointsEarned / pointsPossible) * 100).toFixed(2);
+        var percent = ((pointsEarned / pointsPossible) * 100);
         var grade;
 
         if (percent >= 90) {
@@ -59,7 +59,7 @@ $(document).ready(function () {
         gradeBook.push(student);
         var output = ""
         for (var x of gradeBook) {
-            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage} Grade: ${x.letterGrade} <br>`);
+            output += (`${x.lastN}, ${x.firstN} Percent: ${x.percentage}% Grade: ${x.letterGrade} <br>`);
         }
         $("#gradeBookOutput").html(output);
         //console.log(gradeBook);
@@ -79,10 +79,10 @@ $(document).ready(function () {
     }
 
     function sortByPercent(a,b) {
-        if (a.percentage < b.percentage) {
+        if (a.percentage > b.percentage) {
             return -1;
         }
-        else if (a.percentage > b.percentage) {
+        else if (a.percentage < b.percentage) {
             return 1;
         }
         else {
